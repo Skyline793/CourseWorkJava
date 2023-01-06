@@ -1,4 +1,6 @@
-public class GamePVP extends Game
+import java.io.Serializable;
+
+public class GamePVP extends Game implements Serializable
 {
     /*метод хода игрока
     @param i - номер строки
@@ -29,5 +31,4 @@ public class GamePVP extends Game
         }
     }
 }
-
 }

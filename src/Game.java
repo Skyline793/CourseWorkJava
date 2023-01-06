@@ -1,12 +1,20 @@
+import java.io.Serializable;
+
 import static java.lang.Math.random;
 
-abstract public class Game {
+abstract public class Game implements Serializable {
     protected Battlefield firstPlayerField, secondPlayerField; //объекты поле игрока и поле пк
     protected int endGame; //0 игра идет, 1 игрок победил, 2 компьютер победил
     protected int firstPlayerCount; //число ходов игрока
     protected int secondPlayerCount; //число ходов пк
     protected boolean firstPlayerMove; //логическая переменная, означающая ход игрока
     protected boolean secondPlayerMove; //логическая переменная, означающая ход пк
+
+    public Game()
+    {
+        firstPlayerField = new Battlefield();
+        secondPlayerField = new Battlefield();
+    }
 
     /*метод начала игры
     @param rasstanovka - включен ли режим расстановки*/
@@ -45,13 +53,13 @@ abstract public class Game {
     }
 
     /*метод, возвращающий количество сделанных игроком ходов*/
-    public int GetPlayerCount()
+    public int GetFirstPlayerCount()
     {
         return firstPlayerCount;
     }
 
     /*метод, возвращающий количество сделанных пк ходов*/
-    public int GetCompCount()
+    public int GetSecondPlayerCount()
     {
         return secondPlayerCount;
     }
@@ -120,5 +128,4 @@ abstract public class Game {
         int[] count = secondPlayerField.GetKillCount();
         return count;
     }
-
 }

@@ -1,5 +1,5 @@
 public class CourseWorkJava {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        SeaBattle seaBattle = new SeaBattle(); //запуск игры
     }
 }

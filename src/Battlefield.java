@@ -1,6 +1,8 @@
+import java.io.Serializable;
+
 import static java.lang.Math.random;
 
-public class Battlefield {
+public class Battlefield implements Serializable {
 
     private static int N = 10;
     private int[][] field;
@@ -332,5 +334,4 @@ public class Battlefield {
         count = new int[] {s4, s3, s2, s1};
         return count;
     }
-
 }

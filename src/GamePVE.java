@@ -1,6 +1,8 @@
+import java.io.Serializable;
+
 import static java.lang.Math.random;
 
-public class GamePVE  extends Game {
+public class GamePVE  extends Game implements Serializable {
 
     /*метод хода игрока
 @param i - номер строки
@@ -20,7 +22,7 @@ public class GamePVE  extends Game {
                     {
                         try
                         {
-                            Thread.sleep(600);
+                            Thread.sleep(500);
                         }
                         catch (InterruptedException e)
                         {
