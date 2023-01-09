@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bcbd3635-2f51-4311-904d-cfdfcf9e5d1f" name="Changes" comment="Перенес свои классы из проекта на C++">
+    <list default="true" id="bcbd3635-2f51-4311-904d-cfdfcf9e5d1f" name="Changes" comment="Разработал графический интерфейс, аналогичный реализации на C++">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Battlefield.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Battlefield.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CourseWorkJava.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CourseWorkJava.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GamePVE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GamePVE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GamePVP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GamePVP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SeaBattle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SeaBattle.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +67,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672741646473</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Разработал графический интерфейс, аналогичный реализации на C++">
+      <created>1673000144506</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1673000144506</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -86,6 +90,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Перенес свои классы из проекта на C++" />
-    <option name="LAST_COMMIT_MESSAGE" value="Перенес свои классы из проекта на C++" />
+    <MESSAGE value="Разработал графический интерфейс, аналогичный реализации на C++" />
+    <option name="LAST_COMMIT_MESSAGE" value="Разработал графический интерфейс, аналогичный реализации на C++" />
   </component>
 </project>

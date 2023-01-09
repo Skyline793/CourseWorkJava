@@ -1,7 +1,10 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.basic.BasicBorders;
+import javax.swing.plaf.basic.BasicTreeUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -37,8 +40,12 @@ public class GamePanel extends JPanel { //унаследованный клас�
         timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                repaint(); //перерисовывать панель по таймеру
+                if(gameMode == 1)
+                    DrawComponentsPVE();
+                if(gameMode == 2)
+                    DrawComponentsPVP();
                 EndOfGame();
+                repaint(); //перерисовывать панель по таймеру
             }
         });
         //загрузка изображений
@@ -53,6 +60,15 @@ public class GamePanel extends JPanel { //унаследованный клас�
             e.printStackTrace();
         }
         this.addMouseListener(new Mouse()); //слушатель клика на панель
+        // Локализация компонентов окна JFileChooser
+        UIManager.put("FileChooser.saveButtonText", "Сохранить");
+        UIManager.put("FileChooser.openButtonText", "Открыть");
+        UIManager.put("FileChooser.cancelButtonText", "Отмена");
+        UIManager.put("FileChooser.fileNameLabelText", "Наименование файла");
+        UIManager.put("FileChooser.filesOfTypeLabelText", "Типы файлов");
+        UIManager.put("FileChooser.lookInLabelText", "Директория");
+        UIManager.put("FileChooser.saveInLabelText", "Сохранить в директории");
+        UIManager.put("FileChooser.folderNameLabelText", "Путь директории");
     }
 
     //метод инициалиации компонентов панели
@@ -62,7 +78,7 @@ public class GamePanel extends JPanel { //унаследованный клас�
         orientation_button = new JButton("Повернуть корабли");
         orientation_button.setBackground(Color.WHITE);
         orientation_button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        orientation_button.setBorder(new BevelBorder(0));
+        orientation_button.setBorder(new EmptyBorder(new Insets(0, 0, 0, 0)));
         orientation_button.setBounds(DXY+24*H,DXY+8*H - H/3,7*H,H);
         orientation_button.setVisible(false);
         add(orientation_button);
@@ -80,7 +96,7 @@ public class GamePanel extends JPanel { //унаследованный клас�
         clear_button.setBackground(Color.WHITE);
         clear_button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         clear_button.setBounds(DXY+24*H,DXY+9*H,7*H,H);
-        clear_button.setBorder(new BevelBorder(0));
+        clear_button.setBorder(new EmptyBorder(new Insets(0, 0, 0, 0)));
         clear_button.setVisible(false);
         add(clear_button);
         clear_button.addActionListener(new ActionListener() {
@@ -138,7 +154,6 @@ public class GamePanel extends JPanel { //унаследованный клас�
         g.drawImage(background, 0,0, this.getWidth(), this.getHeight(), null);
         if(gameMode == 1) {
             DrawFields(g);
-            DrawComponentsPVE();
             if(!rasstanovka)
                 DrawRemainingShips(g);
             DrawPlacementShips(g);
@@ -146,7 +161,6 @@ public class GamePanel extends JPanel { //унаследованный клас�
         if(gameMode == 2)
         {
             DrawFields(g);
-            DrawComponentsPVP();
             DrawRemainingShips(g);
         }
     }
@@ -559,7 +573,8 @@ public class GamePanel extends JPanel { //унаследованный клас�
     {
         @Override
         public void mouseClicked(MouseEvent e) {
-            UserClick(e);
+            if(e.getClickCount() == 1 && e.getButton() == 1)
+                UserClick(e);
         }
     }
 
@@ -587,49 +602,45 @@ public class GamePanel extends JPanel { //унаследованный клас�
         }
         catch(Exception ex)
         {
-            JFrame frame = new JFrame("JOptionPane showMessageDialog");
-            JOptionPane.showMessageDialog(frame,
+            JOptionPane.showMessageDialog(null,
                     "Возникла ошибка при сохранении игры!",
                     "Ошибка", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     //метод загрузки игры
-    public void Open()
-    {
-        JFileChooser opener = new JFileChooser("C:\\");
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".bin", "bin");
-        opener.setFileFilter(filter);
-        opener.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        if(opener.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-        {
-            String filename = opener.getSelectedFile().getPath();
-            FileInputStream fis;
-            ObjectInputStream ois;
-            try
-            {
+    public void Open() {
+
+        try {
+            JFileChooser opener = new JFileChooser("C:\\");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(".bin", "bin");
+            opener.setFileFilter(filter);
+            opener.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            if (opener.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                String filename = opener.getSelectedFile().getPath();
+                FileInputStream fis;
+                ObjectInputStream ois;
                 fis = new FileInputStream(filename);
                 ois = new ObjectInputStream(fis);
                 Object obj = ois.readObject();
-                if(obj instanceof GamePVE) {
+                if (obj instanceof GamePVE) {
                     gameMode = 1;
-                    game = (GamePVE)obj;
+                    game = (GamePVE) obj;
                 }
-                if(obj instanceof GamePVP) {
+                if (obj instanceof GamePVP) {
                     gameMode = 2;
-                    game = (GamePVP)obj;
+                    game = (GamePVP) obj;
                 }
                 rasstanovka = false;
                 repaint();
                 timer.start();
             }
-            catch(Exception ex)
-            {
-                JFrame frame = new JFrame("JOptionPane showMessageDialog");
-                JOptionPane.showMessageDialog(frame,
-                        "Возникла ошибка при загрузке сохранения!",
-                        "Ошибка", JOptionPane.INFORMATION_MESSAGE);
-            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null,
+                    "Возникла ошибка при загрузке сохранения!",
+                    "Ошибка", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -641,15 +652,13 @@ public class GamePanel extends JPanel { //унаследованный клас�
             timer.stop();
             if(gameMode == 1)
             {
-                JFrame frame = new JFrame("JOptionPane showMessageDialog");
-                JOptionPane.showMessageDialog(frame,
+                JOptionPane.showMessageDialog(null,
                         "Подравляем! Вы победили!",
                         "Победа", JOptionPane.INFORMATION_MESSAGE);
             }
             if(gameMode == 2)
             {
-                JFrame frame = new JFrame("JOptionPane showMessageDialog");
-                JOptionPane.showMessageDialog(frame,
+                JOptionPane.showMessageDialog(null,
                         "Подравляем! Игрок 1 победил!",
                         "Поражение", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -659,15 +668,13 @@ public class GamePanel extends JPanel { //унаследованный клас�
             timer.stop();
             if(gameMode == 1)
             {
-                JFrame frame = new JFrame("JOptionPane showMessageDialog");
-                JOptionPane.showMessageDialog(frame,
+                JOptionPane.showMessageDialog(null,
                         "К сожалению, Вы проиграли!",
                         "Поражение", JOptionPane.INFORMATION_MESSAGE);
             }
             if(gameMode == 2)
             {
-                JFrame frame = new JFrame("JOptionPane showMessageDialog");
-                JOptionPane.showMessageDialog(frame,
+                JOptionPane.showMessageDialog(null,
                         "Поздравляем! Игрок 2 победил!",
                         "Победа", JOptionPane.INFORMATION_MESSAGE);
             }
